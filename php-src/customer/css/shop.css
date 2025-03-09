@@ -1,0 +1,247 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    color: #333;
+}
+
+/* Navigation Bar */
+nav {
+    top: 20px;
+    left: 100px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+   
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    font-weight: bold;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: rgb(207, 203, 203);
+    color: black;
+    border-radius: 4px;
+}
+
+.logo a img {
+    position: relative;
+    height: 40px;
+}
+
+nav ul li.logo a:hover {
+    background-color: transparent;
+    border-radius: 0;
+}
+
+/* Cart Icon Styles */
+nav .cart {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+nav .cart i {
+    position: relative;
+    font-size: 24px;
+    color: black;
+    left: 500px;
+}
+
+/* Remove hover effect for cart icon */
+nav .cart a:hover {
+    background-color: transparent;
+}
+
+.h1 h1{
+    font-size: 63px;
+    position: relative;
+    margin-left: 30px;
+    top: 30px;
+    
+  
+}
+
+.image img{
+    width: 46%;
+    height: 400px;
+    position: relative;
+   float: right;
+    bottom: 80px;
+    border-radius: 50px;
+   
+}
+
+/* Shop Container */
+.shop-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3rem 2rem;
+    gap: 20px;
+}
+
+/* Shop Section */
+.shop-section {
+    width: 45%;
+    height: 250px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.shop-section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Men Section */
+.men {
+    background: linear-gradient(to top, #08eea1, #4c6a76);
+}
+
+/* Women Section */
+.women {
+    background: linear-gradient(to top, #ab3489, #9f8ad9);
+}
+
+/* Shop Section Titles */
+.shop-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+/* Paragraph Style */
+.shop-section p {
+    font-size: 1rem;
+    color: #f8f9fa;
+    margin-bottom: 1.5rem;
+}
+
+/* Shop Button */
+.shop-btn {
+    margin-top: 20px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #58444a;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.shop-btn:hover {
+    background-color: #555;
+    transform: translateY(-5px);
+}
+
+/* Image Section */
+.image-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    gap: 20px;
+}
+
+.shop-image {
+    width: 40%;
+    height: 100vh;
+  
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   
+}
+
+.shop-image:hover {
+   
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Footer */
+footer {
+    position: relative;
+    background-color: #fef9f9;
+    color: #333;
+    padding: 20px 0;
+    border-top: 1px solid #e0dbdb;
+    margin-top: 130px;
+    bottom: 30px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.footer-section p,
+.footer-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-section ul {
+    margin-top: 10px;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 17px;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #0b0000;
+    margin-top: 30px;
+}

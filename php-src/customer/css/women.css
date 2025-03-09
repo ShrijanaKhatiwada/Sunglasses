@@ -1,0 +1,134 @@
+body {
+    font-family: Montserrat;
+    margin: 0;
+    padding: 0;
+   
+}
+
+nav {
+  
+    top: 20px;
+    left: 100px;
+    /* width: calc(100% - 40px); Ensure nav fits within the header width */
+    display: flex;
+    justify-content: end; /* Spread out nav items */
+    align-items: center; /* Center items vertically */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+nav ul li {
+    /* margin-right: 30px; */
+    font-weight: bold;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+}
+
+nav ul a:hover {
+    background-color: rgb(207, 203, 203);
+    color: black;
+    border-radius: 4px;
+}
+
+.logo a img {
+    position: relative;
+    height: 40px;
+   
+   
+}
+
+nav ul li.logo a:hover {
+    background-color: transparent;
+   
+    border-radius: 0;
+}
+/* Cart icon styles */
+nav .cart {
+    display: flex;
+    align-items: center; /* Center cart icon vertically */
+    margin-right: 10px; /* Adjust spacing as needed */
+}
+
+nav .cart i {
+    position: relative;
+    font-size: 24px; /* Adjust size as needed */
+    color: black;
+    left: 500px; /* Space between cart and login */
+}
+
+/* Remove hover effect for cart icon */
+nav .cart a:hover {
+    background-color: transparent; /* No background change on hover */
+}
+
+nav .login {
+    position: relative;
+    left: 500px; /* Push the "Login" item to the right */
+}
+
+.H1{
+    margin-left:60px ;
+}
+
+/* //////////////fetch data/////////////////////////////? */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+    padding: 25px;
+   
+  
+}
+
+/* Individual Product Item */
+.item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 250px;
+
+    transition: transform 0.3s;
+}
+
+.item:hover {
+    transform: scale(1.05);
+}
+
+/* Product Image */
+
+.image{
+    height: 150px;
+}
+.image img {
+object-fit: cover;
+  
+}
+
+/* Product Title */
+.title {
+    padding: 20px;
+    text-align: center;
+}
+
+.title h1 {
+    font-size: 24px;
+    
+}
+
+.title p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 16px;
+}

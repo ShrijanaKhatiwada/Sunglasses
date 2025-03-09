@@ -1,0 +1,333 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+   
+}
+
+/* .header{
+    box-sizing: border-box;
+} */
+.header img{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+
+}
+
+nav {
+    position: fixed;
+    top: 20px;
+    left: 100px;
+    /* width: calc(100% - 40px); Ensure nav fits within the header width */
+    display: flex;
+     /* Spread out nav items */
+    align-items: center; /* Center items vertically */
+    z-index: 999999;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+nav ul li {
+    /* margin-right: 30px; */
+    font-weight: bold;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+}
+
+nav ul a:hover {
+    background-color: rgb(207, 203, 203);
+    color: black;
+    border-radius: 4px;
+}
+
+.nav2{
+    display: flex;
+    align-items: center;
+}
+.logo a img {
+    position: relative;
+    height: 40px;
+    right: 80px;/* Space between the logo and HOME link */
+   
+   
+}
+
+nav ul li.logo a:hover {
+    background-color: transparent;
+   border-radius: 0;
+}
+
+/* Cart icon styles */
+nav .cart {
+    display: flex;
+    align-items: center; /* Center cart icon vertically */
+    margin-right: 10px; /* Adjust spacing as needed */
+}
+
+nav .cart i {
+    position: relative;
+    font-size: 24px; /* Adjust size as needed */
+    color: black;
+    left: 580px; /* Space between cart and login */
+}
+
+/* Remove hover effect for cart icon */
+nav .cart a:hover {
+    background-color: transparent; /* No background change on hover */
+}
+
+nav .login {
+    position: absolute;
+    left: 900px; /* Push the "Login" item to the right */
+}
+nav .order{
+    position: relative;
+    left: 450px; 
+
+}
+
+/* Ensure the positioning for other elements remains unchanged */
+.content {
+    text-align: center;
+}
+
+.content h1 {
+    position: relative;
+    font-size: 48px;
+    right: 320px;
+    color: black;
+    bottom: 320px;
+}
+
+.content p {
+    position: relative;
+    font-size: 24px;
+    right: 350px;
+    color: black;
+    bottom: 330px;
+}
+
+.btn1 {
+    position: relative;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    right: 500px;
+    bottom: 300px;
+    border: 1px solid black;
+}
+
+.btn1:hover {
+    background-color: black;
+    color: antiquewhite;
+}
+
+/* Styles for content2//////////////////////////////////////////////////////////// */
+.content2 {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 20px; /* Adjust spacing as needed */
+    margin-bottom: 20px;
+    bottom: 190px;
+}
+
+.image-section {
+
+    width: 70%; /*Takes up two-thirds of the width*/
+    display: flex;
+    gap: 10px; /* Space between images */
+}
+
+.image-section img {
+    width: 49%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover;
+}
+
+.about-us {
+    width: 360px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for contrast */
+    
+}
+
+.about-us h1 {
+    font-size: 70px;
+   
+}
+
+.about-us p {
+    font-size: 15px;
+    text-align: justify;
+}
+
+ .btn2{
+    position: relative;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 15px 20px;
+    top: 50px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    
+}
+.btn2:hover{
+    background-color: black;
+    color: antiquewhite;
+
+
+}
+/* ///////////////////////////////////////////////////////////////////////////////////// */
+.content3 {
+    position: relative;
+    width: 100%;
+}
+
+.content3 img {
+    width: 100%;
+    height: 120vh;
+    position: relative;
+    bottom: 180px;
+  
+}
+.content3 h1{
+    position: absolute;
+    bottom: 530px;
+    left: 30px;
+    font-size: 55px;
+    font-family: Montserrat;
+
+}
+.content3 p{
+    position: absolute;
+    bottom: 450px;
+    left: 30px;
+    font-size: 20px;
+    font-family: Montserrat;
+    text-align: justify;
+    
+}
+.content3 .btn{
+    position: relative;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 15px 20px;
+    bottom: 390px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    left: 30px;
+
+}
+.content3 .btn:hover{
+    background-color: black;
+    color: antiquewhite;
+
+
+}
+.icon {
+    display: flex;
+    gap: 40px;
+}
+.icon img{
+    position: relative;
+    width:30%;
+    height: 280px;
+    bottom: 150px;
+    border: 1px solid black;
+    left: 10px;
+    
+}
+.p{
+    position: relative;
+    display: flex;
+    bottom: 130px;
+    padding: 0px 20px;
+   
+   
+}
+hr{
+    position: relative;
+    bottom: 140px;
+}
+/* ///////////////////////footer//////////////////////////////////////// */
+footer {
+    position: relative;
+    background-color: #fef9f9;
+    color: #333;
+    padding: 20px 0;
+    border-top: 1px solid #e0dbdb;
+    bottom: 30px;
+}
+
+.footer-container {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+   bottom: 30px;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+.footer-section p, .footer-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-section ul {
+    margin-top: 10px;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 17px;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    position: relative;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #0b0000;
+    top: 30px;
+}
