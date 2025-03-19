@@ -3,6 +3,13 @@ ob_start();
 session_start();
 require_once '../connection.php';
 
+// Check if user is logged in
+$isLoggedIn = isset($_SESSION['is_login']) && $_SESSION['is_login'] === true;
+if (!$isLoggedIn) {
+    header('Location: ../index.php');
+    exit;
+}
+
 // Fetch data from the database for the specific dog using the ID
 $sql = "SELECT * FROM product WHERE category_id = 1";
 
@@ -17,87 +24,196 @@ ob_end_flush();
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../customer/css/men.css">
+    <title>Men's Collection - Shade Paradise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
-    <nav>
-        <ul>
-
-            <li class="logo"><a href="#"><img src="../images/sunglasses.png" alt="Sunglasses Logo"></a></li>
-            <li><a href="customer_index.php">HOME</a></li>
-            <li><a href="men.php">MEN</a></li>
-            <li><a href="women.php">WOMEN</a></li>
-            <li><a href="customer_contact.php">CONTACT </a></li>
-            <li><a href="order.php">ORDERS </a></li>
-            <!-- <li class="login"><a href="#">LOGOUT</a></li> -->
-            <li class="cart"><a href="customer_view_cart.php"><i class="fas fa-shopping-cart"></i></a></li>
-        </ul>
-    </nav>
-    <h1 class="H1">Home/Men</h1>
-
-    <div class="container">
-
-        <?php foreach ($productData as $product) { ?>
-            <div class="item">
-                <div class="image">
-                    <a href="customer_view_product.php?id=<?= $product['id'] ?>">
-                        <img src="../admin/uploads/<?= $product['image'] ?>" alt="<?= $product['brand'] ?>"></a>
-                </div>
-                <div class="title">
-                    <h1>Brand:<?= $product['brand'] ?></h1>
-                    <p>Price: <?= $product['price'] ?></p>
-
-                </div>
-            </div>
-
-
-
-        <?php } ?>
-
+<body class="bg-gray-50 font-sans">
+    <!-- Mobile Menu Toggle -->
+    <div class="sm:hidden fixed bottom-4 right-4 z-50">
+        <button id="mobile-menu-toggle" class="bg-primary-600 text-white p-3 rounded-full shadow-lg">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
 
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>Sunglasses</h4>
-                <p>Learn more about our company and values.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="customer_index.php">Home</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="customer_about.php">About</a></li>
-                    <li><a href="customer_contact.php">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <p>Email: sunglasses@gmail.com</p>
-                <p>Phone: 9810103344</p>
-                <p>Address: Kathmandu,Kalanki</p>
+    <!-- Mobile Navigation Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-40 transform translate-x-full transition-transform duration-300 sm:hidden">
+        <div class="flex flex-col h-full justify-center items-center">
+            <button id="close-menu" class="absolute top-4 right-4 text-white text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="flex flex-col items-center space-y-6 text-xl">
+                <a href="customer_index.php" class="text-white hover:text-primary-300 transition">HOME</a>
+                <a href="shop.php" class="text-white hover:text-primary-300 transition">SHOP</a>
+                <a href="men.php" class="text-white hover:text-primary-300 transition font-bold">MEN</a>
+                <a href="women.php" class="text-white hover:text-primary-300 transition">WOMEN</a>
+                <a href="customer_contact.php" class="text-white hover:text-primary-300 transition">CONTACT</a>
+                <a href="order.php" class="text-white hover:text-primary-300 transition">ORDERS</a>
+                <a href="../index/index.php" class="text-white hover:text-primary-300 transition">LOGOUT</a>
+                <a href="customer_view_cart.php" class="text-white hover:text-primary-300 transition flex items-center">
+                    <span class="mr-2">CART</span>
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 ShadeParadise. All rights reserved.</p>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="bg-gradient-to-r from-primary-700 to-primary-900 text-white shadow-md sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="mr-6">
+                        <img src="../images/sunglasses.png" alt="Sunglasses Logo" class="h-10">
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="customer_index.php" class="hover:text-primary-200 transition">HOME</a>
+                    <a href="shop.php" class="hover:text-primary-200 transition">SHOP</a>
+                    <a href="men.php" class="border-b-2 border-white hover:text-primary-200 transition font-semibold">MEN</a>
+                    <a href="women.php" class="hover:text-primary-200 transition">WOMEN</a>
+                    <a href="customer_contact.php" class="hover:text-primary-200 transition">CONTACT</a>
+                    <a href="order.php" class="hover:text-primary-200 transition">ORDERS</a>
+                    <a href="../index/index.php" class="hover:text-primary-200 transition">LOGOUT</a>
+                    <a href="customer_view_cart.php" class="hover:text-primary-200 transition">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-gray-100 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center text-sm text-gray-600">
+                <a href="customer_index.php" class="hover:text-primary-600">Home</a>
+                <span class="mx-2">/</span>
+                <span class="text-primary-800 font-semibold">Men's Collection</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mt-2">Men's Sunglasses</h1>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container mx-auto px-4 py-12">
+        <!-- Filter and Sort (Can be expanded) -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <p class="text-gray-700 mb-4 md:mb-0">Showing <?= count($productData) ?> products</p>
+            <div class="flex items-center space-x-2">
+                <span class="text-gray-700">Sort by:</span>
+                <select class="border rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <option>Featured</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Newest</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <?php foreach ($productData as $product) { ?>
+                <div class="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <a href="customer_view_product.php?id=<?= $product['id'] ?>" class="block relative overflow-hidden">
+                        <img src="../admin/uploads/<?= $product['image'] ?>" alt="<?= $product['brand'] ?>" 
+                             class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                    </a>
+                    <div class="p-4">
+                        <a href="customer_view_product.php?id=<?= $product['id'] ?>" class="block">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-primary-600 transition"><?= $product['brand'] ?></h3>
+                        </a>
+                        <p class="text-primary-600 font-bold mb-3">Rs <?= number_format($product['price'], 2) ?></p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(4.5)</span>
+                            </div>
+                            <a href="customer_view_product.php?id=<?= $product['id'] ?>" 
+                               class="text-primary-600 text-sm font-semibold hover:text-primary-800 transition">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Shade Paradise</h4>
+                    <p class="text-gray-400">Premium eyewear for every style.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="customer_index.php" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="shop.php" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                        <li><a href="customer_about.php" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="customer_contact.php" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <p class="text-gray-400">Email: sunglasses@gmail.com</p>
+                    <p class="text-gray-400">Phone: 9810103344</p>
+                    <p class="text-gray-400">Address: Kathmandu, Kalanki</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center">
+                <p class="text-gray-400">&copy; 2024 Shade Paradise. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
-
-
-
-
-
-
-
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+    </script>
 </body>
-
 </html>

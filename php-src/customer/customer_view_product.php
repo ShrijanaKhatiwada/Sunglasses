@@ -42,6 +42,9 @@ mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
 mysqli_stmt_execute($stmt);
 $totalCartResult = mysqli_stmt_get_result($stmt);
 $totalCartItems = ($totalCartResult && $row = mysqli_fetch_assoc($totalCartResult)) ? $row['total'] : 0;
+
+// Close database connection
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -49,179 +52,327 @@ $totalCartItems = ($totalCartResult && $row = mysqli_fetch_assoc($totalCartResul
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product View</title>
-    <link rel="stylesheet" href="../customer/css/customer_view_product.css">
+    <title>Product Details - Shade Paradise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .cart-quantity {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: #ff4444;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-            min-width: 15px;
-            text-align: center;
-        }
-
-        #cart-icon {
-            position: relative;
-            display: inline-block;
-        }
-
-        .add-to-cart-feedback {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #28a745;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            animation: fadeInOut 2.5s ease-in-out;
-        }
-
-        .item-quantity {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-left: 8px;
-            font-size: 14px;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-20px); }
-            15% { opacity: 1; transform: translateY(0); }
-            85% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
-        }
-    </style>
 </head>
-<body>
-    <nav>
-        <ul>
-            <li class="logo"><a href="#"><img src="../images/sunglasses.png" alt="Sunglasses Logo"></a></li>
-            <li><a href="customer_index.php">HOME</a></li>
-            <li><a href="men.php">MEN</a></li>
-            <li><a href="women.php">WOMEN</a></li>
-            <li><a href="#">CONTACT</a></li>
-            <li><a href="order.php">ORDERS</a></li>
-            <li class="login"><a href="logout.php">LOGOUT</a></li>
-            <li>
-                <a href="customer_view_cart.php" id="cart-icon">
+<body class="bg-gray-50 font-sans">
+    <!-- Mobile Menu Toggle -->
+    <div class="sm:hidden fixed bottom-4 right-4 z-50">
+        <button id="mobile-menu-toggle" class="bg-blue-600 text-white p-3 rounded-full shadow-lg">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Navigation Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-40 transform translate-x-full transition-transform duration-300 sm:hidden">
+        <div class="flex flex-col h-full justify-center items-center">
+            <button id="close-menu" class="absolute top-4 right-4 text-white text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="flex flex-col items-center space-y-6 text-xl">
+                <a href="customer_index.php" class="text-white hover:text-blue-300 transition">HOME</a>
+                <a href="shop.php" class="text-white hover:text-blue-300 transition">SHOP</a>
+                <a href="men.php" class="text-white hover:text-blue-300 transition">MEN</a>
+                <a href="women.php" class="text-white hover:text-blue-300 transition">WOMEN</a>
+                <a href="about_us.php" class="text-white hover:text-blue-300 transition">ABOUT</a>
+                <a href="customer_contact.php" class="text-white hover:text-blue-300 transition">CONTACT</a>
+                <a href="order.php" class="text-white hover:text-blue-300 transition">ORDERS</a>
+                <a href="logout.php" class="text-white hover:text-blue-300 transition">LOGOUT</a>
+                <a href="customer_view_cart.php" class="text-white hover:text-blue-300 transition flex items-center">
+                    <span class="mr-2">CART</span>
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-quantity"><?php echo $totalCartItems ?: '0'; ?></span>
+                    <span class="ml-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                        <?php echo $totalCartItems ?: '0'; ?>
+                    </span>
                 </a>
-            </li>
-        </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-md hidden sm:block">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="mr-6">
+                        <img src="../images/sunglasses.png" alt="Shade Paradise" class="h-10">
+                    </a>
+                    <span class="text-xl font-bold">Shade Paradise</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="customer_index.php" class="hover:text-blue-200 transition">HOME</a>
+                    <a href="shop.php" class="hover:text-blue-200 transition">SHOP</a>
+                    <a href="men.php" class="hover:text-blue-200 transition">MEN</a>
+                    <a href="women.php" class="hover:text-blue-200 transition">WOMEN</a>
+                    <a href="about_us.php" class="hover:text-blue-200 transition">ABOUT</a>
+                    <a href="customer_contact.php" class="hover:text-blue-200 transition">CONTACT</a>
+                    <a href="order.php" class="hover:text-blue-200 transition">ORDERS</a>
+                    <a href="logout.php" class="hover:text-blue-200 transition">LOGOUT</a>
+                    <a href="customer_view_cart.php" class="hover:text-blue-200 transition relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                            <?php echo $totalCartItems ?: '0'; ?>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <h1 class="H1">Home/<?php echo htmlspecialchars($category); ?></h1>
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-3">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center text-sm text-gray-600">
+                <a href="customer_index.php" class="hover:text-blue-600 transition">Home</a>
+                <span class="mx-2">/</span>
+                <a href="<?php echo strtolower($category); ?>.php" class="hover:text-blue-600 transition"><?php echo htmlspecialchars($category); ?></a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-800 font-medium">Product Details</span>
+            </div>
+        </div>
+    </div>
 
-    <div class="add-to-cart-feedback" id="add-to-cart-feedback">Added to cart</div>
+    <!-- Feedback Notification (hidden by default) -->
+    <div class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 transform transition-all duration-300 opacity-0 translate-y-[-20px] hidden" id="add-to-cart-feedback">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Added to cart</span>
+        </div>
+    </div>
 
-    <div class="container">
+    <!-- Product Detail Container -->
+    <div class="container mx-auto px-4 py-12">
         <?php foreach ($productData as $product) { ?>
-            <div class="item">
-                <div class="image">
-                    <img src="../admin/uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['brand']); ?>">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                <!-- Product Image -->
+                <div class="md:w-1/2 p-8 flex items-center justify-center bg-gray-50">
+                    <img src="../admin/uploads/<?php echo htmlspecialchars($product['image']); ?>" 
+                         alt="<?php echo htmlspecialchars($product['brand']); ?>" 
+                         class="max-w-full max-h-[400px] object-contain rounded-lg shadow-md">
                 </div>
-                <div class="title">
-                    <h1>Brand: <?php echo htmlspecialchars($product['brand']); ?></h1>
-                    <p>Color: <?php echo htmlspecialchars($product['color']); ?></p>
-                    <p>Price: Rs. <?php echo number_format($product['price'], 2); ?></p>
-                    <p>Available: <?php echo htmlspecialchars($product['quantity']); ?></p>
-                    <p>Description: <?php echo htmlspecialchars($product['description']); ?></p>
-
-                    <div class="buttons">
+                
+                <!-- Product Details -->
+                <div class="md:w-1/2 p-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                        <?php echo htmlspecialchars($product['brand']); ?>
+                    </h1>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-center text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-600 text-sm ml-2">(4.5/5)</span>
+                        </div>
+                        
+                        <div class="text-2xl font-bold text-blue-600 mb-4">
+                            Rs. <?php echo number_format($product['price'], 2); ?>
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-gray-600 mb-1">
+                            <span class="w-24 font-medium">Color:</span>
+                            <span><?php echo htmlspecialchars($product['color']); ?></span>
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-gray-600 mb-1">
+                            <span class="w-24 font-medium">Category:</span>
+                            <span><?php echo htmlspecialchars($category); ?></span>
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-gray-600 mb-1">
+                            <span class="w-24 font-medium">In Stock:</span>
+                            <span class="<?php echo $product['quantity'] > 0 ? 'text-green-600' : 'text-red-600'; ?> font-medium">
+                                <?php echo $product['quantity'] > 0 ? htmlspecialchars($product['quantity']) . ' units' : 'Out of stock'; ?>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-6 mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Description</h3>
+                        <p class="text-gray-600 mb-4">
+                            <?php echo htmlspecialchars($product['description']); ?>
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                         <?php if ($product['quantity'] == 0) { ?>
-                            <div class="out-of-stock">Out of stock!!!</div>
+                            <button class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-md font-bold cursor-not-allowed" disabled>
+                                Out of Stock
+                            </button>
                         <?php } else { ?>
-                            <button class="add-to-cart" 
+                            <button class="add-to-cart w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md font-bold transition transform hover:-translate-y-1 shadow-md flex items-center justify-center"
                                     data-product-id="<?php echo $product['id']; ?>" 
                                     data-user-id="<?php echo $_SESSION['user_id']; ?>">
+                                <i class="fas fa-shopping-cart mr-2"></i>
                                 Add to Cart
                                 <?php if ($currentCartQty > 0) { ?>
-                                    <span class="item-quantity">(<?php echo $currentCartQty; ?>)</span>
+                                    <span class="ml-2 bg-white text-blue-600 rounded-full px-2 py-0.5 text-xs font-bold">
+                                        <?php echo $currentCartQty; ?> in cart
+                                    </span>
                                 <?php } ?>
                             </button>
                         <?php } ?>
+                        
+                        <a href="<?php echo strtolower($category); ?>.php" class="block text-center w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-6 rounded-md font-bold transition">
+                            Back to <?php echo $category; ?>
+                        </a>
                     </div>
-                </div> 
+                </div>
             </div>
         <?php } ?>
     </div>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>Sunglasses</h4>
-                <p>Learn more about our company and values.</p>
+    <!-- Similar Products Section (Optional) -->
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-8">You Might Also Like</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- This would be populated with similar products -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-glasses text-gray-400 text-4xl"></i>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800">Similar Product</h3>
+                    <p class="text-gray-600 text-sm">Category</p>
+                    <p class="text-blue-600 font-bold mt-2">Rs. 2,500</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="customer_index.php">Home</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="customer_about.php">About</a></li>
-                    <li><a href="customer_contact.php">Contact</a></li>
-                </ul>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-glasses text-gray-400 text-4xl"></i>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800">Similar Product</h3>
+                    <p class="text-gray-600 text-sm">Category</p>
+                    <p class="text-blue-600 font-bold mt-2">Rs. 2,500</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <p>Email: sunglasses@gmail.com</p>
-                <p>Phone: 9810103344</p>
-                <p>Address: Kathmandu, Kalanki</p>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-glasses text-gray-400 text-4xl"></i>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800">Similar Product</h3>
+                    <p class="text-gray-600 text-sm">Category</p>
+                    <p class="text-blue-600 font-bold mt-2">Rs. 2,500</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-glasses text-gray-400 text-4xl"></i>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-800">Similar Product</h3>
+                    <p class="text-gray-600 text-sm">Category</p>
+                    <p class="text-blue-600 font-bold mt-2">Rs. 2,500</p>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 ShadeParadise. All rights reserved.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Shade Paradise</h4>
+                    <p class="text-gray-400">Premium eyewear for every style.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="customer_index.php" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="shop.php" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                        <li><a href="about_us.php" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="customer_contact.php" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <p class="text-gray-400">Email: shrijanakhatiwada88@gmail.com</p>
+                    <p class="text-gray-400">Phone: 9863588150</p>
+                    <p class="text-gray-400">Address: Kathmandu, Kalanki</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center">
+                <p class="text-gray-400">&copy; 2024 Shade Paradise. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    const cartQuantityBadge = document.querySelector('.cart-quantity');
-    const feedbackElement = document.getElementById('add-to-cart-feedback');
-
-    addToCartButtons.forEach(function(button) {
-        button.addEventListener('click', async function(event) {
-            event.preventDefault();
-
-            const productId = this.getAttribute('data-product-id');
-            const userId = this.getAttribute('data-user-id');
-            
-            try {
-                const response = await fetch('add_to_cart.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `product_id=${productId}&customer_id=${userId}`
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.status === 'success') {
-                    cartQuantityBadge.textContent = data.cartTotal;
-                    feedbackElement.style.display = 'block';
-                    setTimeout(() => feedbackElement.style.display = 'none', 2500);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
         });
-    });
-});
-</script>
+        
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
 
+        // Add to cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const cartQuantityBadges = document.querySelectorAll('.fa-shopping-cart + span');
+            const feedbackElement = document.getElementById('add-to-cart-feedback');
+
+            addToCartButtons.forEach(function(button) {
+                button.addEventListener('click', async function(event) {
+                    event.preventDefault();
+
+                    const productId = this.getAttribute('data-product-id');
+                    const userId = this.getAttribute('data-user-id');
+                    
+                    try {
+                        const response = await fetch('add_to_cart.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `product_id=${productId}&customer_id=${userId}`
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.status === 'success') {
+                            // Update all cart quantity badges
+                            cartQuantityBadges.forEach(badge => {
+                                badge.textContent = data.cartTotal;
+                            });
+                            
+                            // Show feedback notification
+                            feedbackElement.classList.remove('hidden');
+                            feedbackElement.classList.remove('opacity-0', 'translate-y-[-20px]');
+                            feedbackElement.classList.add('opacity-100', 'translate-y-0');
+                            
+                            // Hide after 2.5 seconds
+                            setTimeout(() => {
+                                feedbackElement.classList.remove('opacity-100', 'translate-y-0');
+                                feedbackElement.classList.add('opacity-0', 'translate-y-[-20px]');
+                                setTimeout(() => {
+                                    feedbackElement.classList.add('hidden');
+                                }, 300);
+                            }, 2500);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 
