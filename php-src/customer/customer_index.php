@@ -44,7 +44,11 @@ include '../includes/header.php';
 <div class="container mx-auto px-6 md:px-12 py-24">
     <div class="flex flex-col md:flex-row items-center justify-between">
         <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12 slide-in-left">
-            <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6 gradient-text">A few words about us</h2>
+            <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">
+                <span class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    A few words about us
+                </span>
+            </h2>
             <p class="text-gray-600 mb-6 font-montserrat leading-relaxed">
                 At Shade Paradise, we offer a curated selection of stylish and high-quality sunglasses 
                 to suit every taste and occasion. Our premium eyewear combines fashion-forward design 
@@ -88,9 +92,11 @@ include '../includes/header.php';
 
 <!-- Service Features -->
 <div class="container mx-auto px-6 md:px-12 py-24">
-    <h2 class="text-3xl md:text-4xl font-playfair font-bold text-center mb-16 gradient-text">
+    <h2 class="text-3xl md:text-4xl font-playfair font-bold text-center mb-16">
         <span class="relative">
-            Our Services
+            <span class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Our Services
+            </span>
             <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></span>
         </span>
     </h2>
@@ -131,9 +137,11 @@ include '../includes/header.php';
 <!-- Featured Products -->
 <div class="bg-gray-50 py-24">
     <div class="container mx-auto px-6 md:px-12">
-        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-center mb-16 gradient-text">
+        <h2 class="text-3xl md:text-4xl font-playfair font-bold text-center mb-16">
             <span class="relative">
-                Featured Products
+                <span class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    Featured Products
+                </span>
                 <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></span>
             </span>
         </h2>

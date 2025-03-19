@@ -22,11 +22,18 @@
 .hover-scale:hover {
     transform: scale(1.05);
 }
+.hover-shadow {
+    transition: box-shadow 0.3s ease;
+}
+.hover-shadow:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
 .gradient-text {
-    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    background: linear-gradient(to right, #3b82f6, #a855f7);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    display: inline-block;
 }
 
 /* Header & Navigation */
@@ -49,6 +56,10 @@
 
 /* Cards */
 .product-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
 }
 .product-card:hover {
@@ -178,4 +189,38 @@
 .feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-} 
+}
+
+/* Add any missing CSS here */
+.service-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Make sure backgrounds are always visible */
+.bg-gray-50 {
+  background-color: #f9fafb !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Ensure proper z-indexing */
+.product-card, .service-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix potential issues with gradient text */
+.bg-clip-text {
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Add these at the end of the file to ensure they take precedence */ 
