@@ -137,7 +137,6 @@ include '../includes/header.php';
                 <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></span>
             </span>
         </h2>
-        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 product-cards">
             <!-- Product 1 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden hover-scale hover-shadow product-card">
@@ -155,7 +154,6 @@ include '../includes/header.php';
                     </div>
                 </div>
             </div>
-            
             <!-- Product 2 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden hover-scale hover-shadow product-card">
                 <div class="h-56 bg-gray-200 flex items-center justify-center">
@@ -172,7 +170,6 @@ include '../includes/header.php';
                     </div>
                 </div>
             </div>
-            
             <!-- Product 3 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden hover-scale hover-shadow product-card">
                 <div class="h-56 bg-gray-200 flex items-center justify-center">
@@ -189,7 +186,6 @@ include '../includes/header.php';
                     </div>
                 </div>
             </div>
-            
             <!-- Product 4 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden hover-scale hover-shadow product-card">
                 <div class="h-56 bg-gray-200 flex items-center justify-center">

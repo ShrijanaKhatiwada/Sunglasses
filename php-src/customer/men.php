@@ -73,7 +73,7 @@ ob_end_flush();
                 <a href="women.php" class="text-white hover:text-primary-300 transition">WOMEN</a>
                 <a href="customer_contact.php" class="text-white hover:text-primary-300 transition">CONTACT</a>
                 <a href="order.php" class="text-white hover:text-primary-300 transition">ORDERS</a>
-                <a href="../index/index.php" class="text-white hover:text-primary-300 transition">LOGOUT</a>
+                <a href="../logout.php" class="text-white hover:text-primary-300 transition">LOGOUT</a>
                 <a href="customer_view_cart.php" class="text-white hover:text-primary-300 transition flex items-center">
                     <span class="mr-2">CART</span>
                     <i class="fas fa-shopping-cart"></i>
@@ -98,7 +98,7 @@ ob_end_flush();
                     <a href="women.php" class="hover:text-primary-200 transition">WOMEN</a>
                     <a href="customer_contact.php" class="hover:text-primary-200 transition">CONTACT</a>
                     <a href="order.php" class="hover:text-primary-200 transition">ORDERS</a>
-                    <a href="../index/index.php" class="hover:text-primary-200 transition">LOGOUT</a>
+                    <a href="../logout.php" class="hover:text-primary-200 transition">LOGOUT</a>
                     <a href="customer_view_cart.php" class="hover:text-primary-200 transition">
                         <i class="fas fa-shopping-cart"></i>
                     </a>

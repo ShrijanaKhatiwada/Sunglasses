@@ -11,15 +11,36 @@ if ($isLoggedIn) {
 }
 
 // Database connection
-include 'db/connection.php';
+include 'connection.php';
 
-// Fetch all products
+// Debug database connection
+echo "<p style='display:none;'>Connection variables: Host: $host, User: $username, DB: $database</p>";
+if (isset($conn->connect_error)) {
+    echo "<p style='display:none;'>Connection error: " . $conn->connect_error . "</p>";
+}
+
+// Fetch products with column check
+$sql = "SHOW COLUMNS FROM product";
+$columnResult = mysqli_query($conn, $sql);
+$columns = [];
+if ($columnResult) {
+    while ($row = mysqli_fetch_assoc($columnResult)) {
+        $columns[] = $row['Field'];
+    }
+    echo "<p style='display:none;'>Columns in product table: " . implode(", ", $columns) . "</p>";
+}
+
+// Now get the products with proper column names
 $sql = "SELECT * FROM product";
 $result = mysqli_query($conn, $sql);
 $products = [];
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $products[] = $row;
+    }
+    echo "<p style='display:none;'>Found " . count($products) . " products</p>";
+    if (count($products) > 0) {
+        echo "<p style='display:none;'>First product keys: " . implode(", ", array_keys($products[0])) . "</p>";
     }
 }
 ?>
@@ -126,9 +147,9 @@ if ($result && mysqli_num_rows($result) > 0) {
     <div class="fixed inset-0 -z-10">
         <div class="absolute inset-0 bg-gradient-to-b from-blue-900/70 to-black/70 z-10"></div>
         <video autoplay muted loop class="absolute w-full h-full object-cover opacity-40">
-            <source src="../videos/sunglasses-bg.mp4" type="video/mp4">
+            <source src="videos/sunglasses-bg.mp4" type="video/mp4">
             <!-- Fallback image if video doesn't load -->
-            <img src="../images/header.jpg" alt="Luxury Eyewear" class="absolute w-full h-full object-cover">
+            <img src="images/header.jpg" alt="Luxury Eyewear" class="absolute w-full h-full object-cover">
         </video>
     </div>
 
@@ -136,12 +157,12 @@ if ($result && mysqli_num_rows($result) > 0) {
     <header class="pt-6 px-6 md:px-12 relative z-20">
         <div class="flex justify-between items-center">
             <div class="flex items-center">
-                <img src="../images/sunglasses.png" alt="Shade Paradise" class="h-12 animate__animated animate__fadeIn">
+                <img src="images/sunglasses.png" alt="Shade Paradise" class="h-12 animate__animated animate__fadeIn">
                 <h1 class="ml-4 text-2xl font-playfair font-bold tracking-wider animate__animated animate__fadeIn">SHADE PARADISE</h1>
             </div>
             <div class="flex space-x-6 items-center">
-                <a href="../customer/customer_login.php" class="hidden md:block px-6 py-2 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-sm uppercase tracking-wider">Login</a>
-                <a href="../customer/customer_register.php" class="hidden md:block px-6 py-2 bg-white text-black rounded-full hover:bg-opacity-80 transition-all duration-300 text-sm uppercase tracking-wider">Register</a>
+                <a href="customer/customer_login.php" class="hidden md:block px-6 py-2 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-sm uppercase tracking-wider">Login</a>
+                <a href="customer/customer_register.php" class="hidden md:block px-6 py-2 bg-white text-black rounded-full hover:bg-opacity-80 transition-all duration-300 text-sm uppercase tracking-wider">Register</a>
                 <button id="menu-toggle" class="md:hidden text-2xl">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -156,11 +177,11 @@ if ($result && mysqli_num_rows($result) > 0) {
         </button>
         <div class="flex flex-col items-center space-y-8">
             <div class="mb-8">
-                <img src="../images/sunglasses.png" alt="Shade Paradise" class="h-16 mx-auto">
+                <img src="images/sunglasses.png" alt="Shade Paradise" class="h-16 mx-auto">
                 <h2 class="text-center text-2xl font-playfair font-bold mt-4">SHADE PARADISE</h2>
             </div>
-            <a href="../customer/customer_login.php" class="text-xl uppercase tracking-widest border-b border-transparent hover:border-white pb-1 transition-all">Login</a>
-            <a href="../customer/customer_register.php" class="text-xl uppercase tracking-widest border-b border-transparent hover:border-white pb-1 transition-all">Register</a>
+            <a href="customer/customer_login.php" class="text-xl uppercase tracking-widest border-b border-transparent hover:border-white pb-1 transition-all">Login</a>
+            <a href="customer/customer_register.php" class="text-xl uppercase tracking-widest border-b border-transparent hover:border-white pb-1 transition-all">Register</a>
         </div>
     </div>
 
@@ -175,17 +196,17 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Discover our premium collection of luxury eyewear that defines style and protects with purpose.
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 slide-in-left" style="animation-delay: 0.6s">
-                    <a href="../customer/customer_login.php" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center font-semibold uppercase tracking-wider">
+                    <a href="customer/customer_login.php" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center font-semibold uppercase tracking-wider">
                         Sign In
                     </a>
-                    <a href="../customer/customer_register.php" class="px-8 py-3 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-center font-semibold uppercase tracking-wider">
+                    <a href="customer/customer_register.php" class="px-8 py-3 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-center font-semibold uppercase tracking-wider">
                         Register
                     </a>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center relative slide-in-right">
                 <div class="w-64 h-64 rounded-full bg-gradient-to-tr from-blue-500/20 to-purple-500/20 absolute blur-3xl"></div>
-                <img src="../images/hero-glasses.png" alt="Premium Sunglasses" class="relative z-10 max-w-[80%] floating">
+                <img src="images/hero-glasses.png" alt="Premium Sunglasses" class="relative z-10 max-w-[80%] floating">
             </div>
         </div>
     </main>
@@ -202,33 +223,33 @@ if ($result && mysqli_num_rows($result) > 0) {
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="glass-card p-6 transform transition-all duration-300 hover:scale-105 collection-card">
                     <div class="h-64 overflow-hidden rounded-lg mb-6">
-                        <img src="../images/men-category.jpg" alt="Men's Collection" class="w-full h-full object-cover">
+                        <img src="images/men-category.jpg" alt="Men's Collection" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-xl font-playfair font-bold mb-2">Men's Collection</h3>
                     <p class="text-gray-400 mb-4">Bold designs for the modern gentleman.</p>
-                    <a href="../customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
+                    <a href="customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
                         <span>Discover</span>
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 <div class="glass-card p-6 transform transition-all duration-300 hover:scale-105 collection-card">
                     <div class="h-64 overflow-hidden rounded-lg mb-6">
-                        <img src="../images/women-category.jpg" alt="Women's Collection" class="w-full h-full object-cover">
+                        <img src="images/women-category.jpg" alt="Women's Collection" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-xl font-playfair font-bold mb-2">Women's Collection</h3>
                     <p class="text-gray-400 mb-4">Elegant frames for the fashionable woman.</p>
-                    <a href="../customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
+                    <a href="customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
                         <span>Discover</span>
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 <div class="glass-card p-6 transform transition-all duration-300 hover:scale-105 collection-card">
                     <div class="h-64 overflow-hidden rounded-lg mb-6">
-                        <img src="../images/glasses.jpg" alt="Premium Selection" class="w-full h-full object-cover">
+                        <img src="images/glasses.jpg" alt="Premium Selection" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-xl font-playfair font-bold mb-2">Premium Selection</h3>
                     <p class="text-gray-400 mb-4">Luxury eyewear for the discerning customer.</p>
-                    <a href="../customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
+                    <a href="customer/customer_login.php" class="text-sm uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors flex items-center">
                         <span>Discover</span>
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
@@ -336,10 +357,10 @@ if ($result && mysqli_num_rows($result) > 0) {
                 Create an account today to explore our exclusive collections and enjoy personalized recommendations.
             </p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate__animated animate__fadeIn">
-                <a href="../customer/customer_login.php" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center font-semibold uppercase tracking-wider">
+                <a href="customer/customer_login.php" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center font-semibold uppercase tracking-wider">
                     Sign In
                 </a>
-                <a href="../customer/customer_register.php" class="px-8 py-3 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-center font-semibold uppercase tracking-wider">
+                <a href="customer/customer_register.php" class="px-8 py-3 border border-white/30 rounded-full hover:bg-white hover:text-black transition-all duration-300 text-center font-semibold uppercase tracking-wider">
                     Register
                 </a>
             </div>
@@ -360,13 +381,19 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <?php foreach ($products as $product) : ?>
                         <a href="customer/customer_login.php" class="block glass-card overflow-hidden transform transition-all duration-300 hover:scale-105 product-card">
                             <div class="h-56 overflow-hidden">
-                                <img src="<?php echo 'images/products/' . $product['p_image']; ?>" alt="<?php echo htmlspecialchars($product['p_brand']); ?>" class="w-full h-full object-cover">
+                                <?php if (isset($product['image']) && !empty($product['image'])) : ?>
+                                    <img src="<?php echo 'admin/uploads/' . $product['image']; ?>" alt="<?php echo isset($product['brand']) ? htmlspecialchars($product['brand']) : 'Sunglasses'; ?>" class="w-full h-full object-cover">
+                                <?php else : ?>
+                                    <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+                                        <i class="fas fa-glasses text-4xl text-gray-600"></i>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-xl font-playfair font-bold mb-1"><?php echo htmlspecialchars($product['p_brand']); ?></h3>
-                                <p class="text-gray-400 text-sm mb-2"><?php echo htmlspecialchars($product['p_color']); ?></p>
+                                <h3 class="text-xl font-playfair font-bold mb-1"><?php echo isset($product['brand']) ? htmlspecialchars($product['brand']) : 'Premium Sunglasses'; ?></h3>
+                                <p class="text-gray-400 text-sm mb-2"><?php echo isset($product['color']) ? htmlspecialchars($product['color']) : 'Classic Style'; ?></p>
                                 <div class="flex items-center justify-between">
-                                    <p class="font-bold text-blue-400">Rs. <?php echo number_format($product['p_price']); ?></p>
+                                    <p class="font-bold text-blue-400">Rs. <?php echo isset($product['price']) ? number_format($product['price']) : '2,500'; ?></p>
                                     <span class="text-sm uppercase tracking-wider text-white/80 hover:text-white transition-colors flex items-center">
                                         View Details <i class="fas fa-arrow-right ml-2"></i>
                                     </span>
@@ -404,7 +431,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div>
                     <div class="flex items-center mb-6">
-                        <img src="../images/sunglasses.png" alt="Shade Paradise" class="h-10 mr-3">
+                        <img src="images/sunglasses.png" alt="Shade Paradise" class="h-10 mr-3">
                         <h3 class="text-xl font-playfair font-bold">SHADE PARADISE</h3>
                     </div>
                     <p class="text-gray-400 mb-6">Premium eyewear that combines style, comfort, and protection.</p>
@@ -423,8 +450,8 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <div>
                     <h3 class="text-lg font-bold mb-6">Quick Links</h3>
                     <ul class="space-y-3">
-                        <li><a href="../customer/customer_login.php" class="text-gray-400 hover:text-white transition-colors">Login</a></li>
-                        <li><a href="../customer/customer_register.php" class="text-gray-400 hover:text-white transition-colors">Register</a></li>
+                        <li><a href="customer/customer_login.php" class="text-gray-400 hover:text-white transition-colors">Login</a></li>
+                        <li><a href="customer/customer_register.php" class="text-gray-400 hover:text-white transition-colors">Register</a></li>
                     </ul>
                 </div>
                 <div>
